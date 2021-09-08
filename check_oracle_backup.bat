@@ -2,7 +2,7 @@
 ::
 :: 25/07/2016
 ::
-:: Check oracle backup script 
+:: Check oracle backup script
 ::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -12,7 +12,7 @@ SetLocal EnableDelayedExpansion
 :: chcp 1251
 
 
-:: Ïðîâåðêà äèðåêòîðèè
+:: Check Directory
 
 set dir=C:\oracle\
 
@@ -24,7 +24,7 @@ if exist %dir% (
 )
 
 
-:: Ïðîâåðêà ïóñòîé äèðåêòîðèè
+:: Check Empty Directory
 
 dir %dir% /a-d >nul 2>nul
 if errorlevel 1 (
@@ -33,7 +33,7 @@ if errorlevel 1 (
 )
 
 
-:: Êëþ÷è 
+:: Keys
 
 if /I "%1" == "" goto USAGE
 if /I %1 == -f goto FULLNUM
@@ -45,7 +45,7 @@ if /I %1 == -ad goto ARCHLOGS
 ::if /I %1 == -l goto ALERT
 
 
-:: Ïîìîùü
+:: Help
 
 :USAGE
 echo ============================================
@@ -65,7 +65,7 @@ echo ============================================
 exit /b 0
 
 
-:: Ïîèñê è ïðîâåðêà ëîãà ïîëíîãî áýêàïà
+:: Check full backup
 
 :FULLNUM
 for /f "tokens=*" %%i in ('dir /b /o:d /a:-d %dir%*db_bkp_diff0*.*') do set log=%%i
@@ -113,7 +113,7 @@ echo CRITICAL - Backup is missing.
 exit /b 2
 )
 
-::forfiles - íåäåëÿ
+::forfiles - week
 
 set output=0
 for /f "usebackq" %%l in ("%dir%%log%") do set /A output+=1
@@ -143,7 +143,7 @@ if  "%ORA%"=="ERROR" (
 )
 
 
-:: Ïîèñê è ïðîâåðêà ëîãà èíêðåìåíòàëüíîãî áýêàïà
+:: Check incremental level 1 backup
 
 :INCREMENTNUM
 for /f "tokens=*" %%i in ('dir /b /o:d /a:-d %dir%*db_bkp_diff1*.*') do set log=%%i
@@ -184,7 +184,7 @@ if not defined log (
  exit /b 2
 )
 
-::forfiles - äåíü
+::forfiles - day
 
 set output=0
 for /f "usebackq" %%l in ("%dir%%log%") do set /A output+=1
@@ -214,7 +214,7 @@ if  "%ORA%"=="ERROR" (
 )
 
 
-:: Ïîèñê è ïðîâåðêà ëîãà áýêàïà àðõèâëîãîâ
+:: Check backup archivelogs
 
 :ARCHLOGSNUM
 for /f "tokens=*" %%i in ('dir /b /o:d /a:-d %dir%*arc_bkp*.*') do set log=%%i
@@ -283,7 +283,7 @@ if  "%ORA%"=="ERROR" (
 )
 
 
-:: Ïðîâåðêà àëåðò ëîãà
+:: Check alert log
 ::set path=C:\app\ora17\diag\rdbms\tyva\tyva\trace
 ::cd %path%
 ::type alert_tyva.log | findstr (date?)
