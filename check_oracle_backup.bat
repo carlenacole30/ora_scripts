@@ -2,7 +2,7 @@
 ::
 :: 25/07/2016
 ::
-:: Check oracle backup script
+:: Check oracle backup script 
 ::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -12,7 +12,7 @@ SetLocal EnableDelayedExpansion
 :: chcp 1251
 
 
-:: Проверка директории
+:: ГЏГ°Г®ГўГҐГ°ГЄГ  Г¤ГЁГ°ГҐГЄГІГ®Г°ГЁГЁ
 
 set dir=C:\oracle\
 
@@ -24,7 +24,7 @@ if exist %dir% (
 )
 
 
-:: Проверка пустой директории
+:: ГЏГ°Г®ГўГҐГ°ГЄГ  ГЇГіГ±ГІГ®Г© Г¤ГЁГ°ГҐГЄГІГ®Г°ГЁГЁ
 
 dir %dir% /a-d >nul 2>nul
 if errorlevel 1 (
@@ -33,7 +33,7 @@ if errorlevel 1 (
 )
 
 
-:: Ключи 
+:: ГЉГ«ГѕГ·ГЁ 
 
 if /I "%1" == "" goto USAGE
 if /I %1 == -f goto FULLNUM
@@ -45,7 +45,7 @@ if /I %1 == -ad goto ARCHLOGS
 ::if /I %1 == -l goto ALERT
 
 
-:: Помощь
+:: ГЏГ®Г¬Г®Г№Гј
 
 :USAGE
 echo ============================================
@@ -65,7 +65,7 @@ echo ============================================
 exit /b 0
 
 
-:: Поиск и проверка лога полного бэкапа
+:: ГЏГ®ГЁГ±ГЄ ГЁ ГЇГ°Г®ГўГҐГ°ГЄГ  Г«Г®ГЈГ  ГЇГ®Г«Г­Г®ГЈГ® ГЎГЅГЄГ ГЇГ 
 
 :FULLNUM
 for /f "tokens=*" %%i in ('dir /b /o:d /a:-d %dir%*db_bkp_diff0*.*') do set log=%%i
@@ -113,7 +113,7 @@ echo CRITICAL - Backup is missing.
 exit /b 2
 )
 
-::forfiles - неделя
+::forfiles - Г­ГҐГ¤ГҐГ«Гї
 
 set output=0
 for /f "usebackq" %%l in ("%dir%%log%") do set /A output+=1
@@ -143,7 +143,7 @@ if  "%ORA%"=="ERROR" (
 )
 
 
-:: Поиск и проверка лога инкрементального бэкапа
+:: ГЏГ®ГЁГ±ГЄ ГЁ ГЇГ°Г®ГўГҐГ°ГЄГ  Г«Г®ГЈГ  ГЁГ­ГЄГ°ГҐГ¬ГҐГ­ГІГ Г«ГјГ­Г®ГЈГ® ГЎГЅГЄГ ГЇГ 
 
 :INCREMENTNUM
 for /f "tokens=*" %%i in ('dir /b /o:d /a:-d %dir%*db_bkp_diff1*.*') do set log=%%i
@@ -184,7 +184,7 @@ if not defined log (
  exit /b 2
 )
 
-::forfiles - день
+::forfiles - Г¤ГҐГ­Гј
 
 set output=0
 for /f "usebackq" %%l in ("%dir%%log%") do set /A output+=1
@@ -214,7 +214,7 @@ if  "%ORA%"=="ERROR" (
 )
 
 
-:: Поиск и проверка лога бэкапа архивлогов
+:: ГЏГ®ГЁГ±ГЄ ГЁ ГЇГ°Г®ГўГҐГ°ГЄГ  Г«Г®ГЈГ  ГЎГЅГЄГ ГЇГ  Г Г°ГµГЁГўГ«Г®ГЈГ®Гў
 
 :ARCHLOGSNUM
 for /f "tokens=*" %%i in ('dir /b /o:d /a:-d %dir%*arc_bkp*.*') do set log=%%i
@@ -283,7 +283,7 @@ if  "%ORA%"=="ERROR" (
 )
 
 
-:: Проверка алерт лога
+:: ГЏГ°Г®ГўГҐГ°ГЄГ  Г Г«ГҐГ°ГІ Г«Г®ГЈГ 
 ::set path=C:\app\ora17\diag\rdbms\tyva\tyva\trace
 ::cd %path%
 ::type alert_tyva.log | findstr (date?)
