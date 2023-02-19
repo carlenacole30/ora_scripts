@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 #
 # 18.10.2016
 #
